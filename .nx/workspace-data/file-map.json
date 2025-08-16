@@ -1,0 +1,135 @@
+{
+  "version": "6.0",
+  "nxVersion": "21.4.0",
+  "pathMappings": {},
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "projectFileMap": {
+      "mobile": [
+        {
+          "file": "apps/mobile/.gitignore",
+          "hash": "12826089633427709940"
+        },
+        {
+          "file": "apps/mobile/.vscode/settings.json",
+          "hash": "13604069932680302502"
+        },
+        {
+          "file": "apps/mobile/README.md",
+          "hash": "1168506559928181538"
+        },
+        {
+          "file": "apps/mobile/app.json",
+          "hash": "5283016184006172616"
+        },
+        {
+          "file": "apps/mobile/app/_layout.tsx",
+          "hash": "10375838786137080435"
+        },
+        {
+          "file": "apps/mobile/app/index.tsx",
+          "hash": "15290935704366808290"
+        },
+        {
+          "file": "apps/mobile/assets/fonts/SpaceMono-Regular.ttf",
+          "hash": "8316399838606165836"
+        },
+        {
+          "file": "apps/mobile/assets/images/adaptive-icon.png",
+          "hash": "16102135492459408350"
+        },
+        {
+          "file": "apps/mobile/assets/images/favicon.png",
+          "hash": "10556792184362654649"
+        },
+        {
+          "file": "apps/mobile/assets/images/icon.png",
+          "hash": "14252482080276080187"
+        },
+        {
+          "file": "apps/mobile/assets/images/partial-react-logo.png",
+          "hash": "17138856618252336249"
+        },
+        {
+          "file": "apps/mobile/assets/images/react-logo.png",
+          "hash": "12800764183471362565"
+        },
+        {
+          "file": "apps/mobile/assets/images/react-logo@2x.png",
+          "hash": "10620144842436275618"
+        },
+        {
+          "file": "apps/mobile/assets/images/react-logo@3x.png",
+          "hash": "12902748134652534090"
+        },
+        {
+          "file": "apps/mobile/assets/images/splash-icon.png",
+          "hash": "16102135492459408350"
+        },
+        {
+          "file": "apps/mobile/eslint.config.js",
+          "hash": "1050212160588093330"
+        },
+        {
+          "file": "apps/mobile/package.json",
+          "hash": "4570042855224258849",
+          "deps": [
+            "npm:@babel/core",
+            "npm:@types/react",
+            "npm:typescript",
+            "npm:eslint",
+            "npm:eslint-config-expo",
+            "npm:@expo/vector-icons",
+            "npm:@react-navigation/bottom-tabs",
+            "npm:@react-navigation/elements",
+            "npm:@react-navigation/native",
+            "npm:expo",
+            "npm:expo-blur",
+            "npm:expo-constants",
+            "npm:expo-font",
+            "npm:expo-haptics",
+            "npm:expo-image",
+            "npm:expo-linking",
+            "npm:expo-router",
+            "npm:expo-splash-screen",
+            "npm:expo-status-bar",
+            "npm:expo-symbols",
+            "npm:expo-system-ui",
+            "npm:expo-web-browser",
+            "npm:react",
+            "npm:react-dom",
+            "npm:react-native",
+            "npm:react-native-gesture-handler",
+            "npm:react-native-reanimated",
+            "npm:react-native-safe-area-context",
+            "npm:react-native-screens",
+            "npm:react-native-web",
+            "npm:react-native-webview"
+          ]
+        },
+        {
+          "file": "apps/mobile/tsconfig.json",
+          "hash": "13453316570448027213"
+        }
+      ]
+    },
+    "nonProjectFiles": [
+      {
+        "file": ".gitignore",
+        "hash": "13385338397451649703"
+      },
+      {
+        "file": "package.json",
+        "hash": "11936575718425187085"
+      },
+      {
+        "file": "pnpm-lock.yaml",
+        "hash": "12441476166359992487"
+      },
+      {
+        "file": "pnpm-workspace.yaml",
+        "hash": "552015354702766390"
+      }
+    ]
+  }
+}
