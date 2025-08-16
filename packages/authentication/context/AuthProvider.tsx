@@ -2,6 +2,8 @@ import { ReactNode, useReducer } from 'react';
 import { AuthContext, authService } from '..';
 import {
   AuthContextType,
+  ConfirmSignUpCommandParams,
+  ConfirmSignUpCommandResponse,
   SignUpCommandParams,
   SignUpCommandResponse,
 } from '../types';
@@ -25,15 +27,34 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const { success, session, error } = signUpCommandResponse;
 
     success
-      ? dispatch({ type: 'SIGN_UP_SUCCESS', payload: session })
-      : dispatch({ type: 'SIGN_UP_FAILURE', payload: error });
+      ? dispatch({ type: 'SIGN_UP_SUCCESS', payload: session ?? null })
+      : dispatch({ type: 'SIGN_UP_FAILURE', payload: error ?? null });
 
     return signUpCommandResponse;
+  };
+
+  const confirmSignUp = async ({
+    email,
+    confirmationCode,
+  }: ConfirmSignUpCommandParams): Promise<ConfirmSignUpCommandResponse> => {
+    dispatch({ type: 'LOADING' });
+    const confirmSignUpResponse = await authService.confirmSignUp({
+      email,
+      confirmationCode,
+    });
+    const { success, session, error } = confirmSignUpResponse;
+
+    success
+      ? dispatch({ type: 'CONFIRM_SIGN_UP_SUCCESS', payload: session ?? null })
+      : dispatch({ type: 'CONFIRM_SIGN_UP_FAILURE', payload: error ?? null });
+
+    return confirmSignUpResponse;
   };
 
   const value: AuthContextType = {
     ...authState,
     signUp,
+    confirmSignUp,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

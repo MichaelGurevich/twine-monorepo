@@ -6,7 +6,7 @@ export interface SignUpCommandParams {
 export interface SignUpCommandResponse {
   success: boolean;
   session?: string;
-  error: string | null;
+  error?: string | null;
 }
 
 export interface ConfirmSignUpCommandParams {
@@ -17,7 +17,7 @@ export interface ConfirmSignUpCommandParams {
 export interface ConfirmSignUpCommandResponse {
   success: boolean;
   session?: string;
-  error: string | null;
+  error?: string | null;
 }
 
 export interface AuthState {
@@ -29,4 +29,7 @@ export interface AuthState {
 
 export interface AuthContextType extends AuthState {
   signUp: (params: SignUpCommandParams) => Promise<SignUpCommandResponse>;
+  confirmSignUp: (
+    params: ConfirmSignUpCommandParams
+  ) => Promise<ConfirmSignUpCommandResponse>;
 }
