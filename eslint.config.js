@@ -115,6 +115,11 @@ module.exports = defineConfig([
       '@typescript-eslint': typescriptEslint,
     },
     rules: {
+      '@typescript-eslint/no-use-before-define': [
+        'error',
+        { functions: false },
+      ],
+
       // TypeScript-specific rules (Airbnb style)
       '@typescript-eslint/no-unused-vars': [
         'error',
@@ -188,10 +193,6 @@ module.exports = defineConfig([
       'import/no-extraneous-dependencies': 'off',
       'global-require': 'off',
       'no-use-before-define': 'off',
-      '@typescript-eslint/no-use-before-define': [
-        'error',
-        { functions: false },
-      ],
     },
   },
 
