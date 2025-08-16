@@ -1,10 +1,17 @@
 import {
   CognitoIdentityProvider,
+  ConfirmSignUpCommand,
+  ConfirmSignUpCommandInput,
   SignUpCommand,
   SignUpCommandInput,
 } from '@aws-sdk/client-cognito-identity-provider';
 import { cognitoConfig } from '../config';
-import { SignUpCommandParams, SignUpCommandResponse } from '../types';
+import {
+  ConfirmSignUpCommandParams,
+  ConfirmSignUpCommandResponse,
+  SignUpCommandParams,
+  SignUpCommandResponse,
+} from '../types';
 
 const { region: REGION, clientId: CLIENT_ID } = cognitoConfig;
 
@@ -36,19 +43,46 @@ class AuthService {
     try {
       const command = new SignUpCommand(signUpCommandInput);
       const response = await this.client.send(command);
+      const { Session } = response;
       return {
         success: true,
-        session: response.UserSub || '',
+        session: Session,
         error: null,
       };
     } catch (error) {
       return {
         success: false,
-        session: null,
+        error: error instanceof Error ? error.name : 'Unknown error',
+      };
+    }
+  }
+
+  async confirmSignUp({
+    email,
+    confirmationCode,
+  }: ConfirmSignUpCommandParams): Promise<ConfirmSignUpCommandResponse> {
+    const confirmSignUpCommandInput: ConfirmSignUpCommandInput = {
+      ClientId: this.clientId,
+      Username: email,
+      ConfirmationCode: confirmationCode,
+    };
+
+    try {
+      const command = new ConfirmSignUpCommand(confirmSignUpCommandInput);
+      const response = await this.client.send(command);
+      const { Session } = response;
+
+      return {
+        success: true,
+        session: Session,
+        error: null,
+      };
+    } catch (error) {
+      return {
+        success: false,
         error: error instanceof Error ? error.name : 'Unknown error',
       };
     }
   }
 }
-
 export const authService = new AuthService(REGION, CLIENT_ID);

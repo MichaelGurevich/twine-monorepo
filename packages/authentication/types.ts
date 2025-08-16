@@ -5,7 +5,18 @@ export interface SignUpCommandParams {
 
 export interface SignUpCommandResponse {
   success: boolean;
-  session: string | null;
+  session?: string;
+  error: string | null;
+}
+
+export interface ConfirmSignUpCommandParams {
+  email: string;
+  confirmationCode: string;
+}
+
+export interface ConfirmSignUpCommandResponse {
+  success: boolean;
+  session?: string;
   error: string | null;
 }
 
