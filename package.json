@@ -13,12 +13,20 @@
     "type-check": "pnpm --filter '*' run type-check",
     "dev": "pnpm --filter mobile start",
     "build": "pnpm --filter '*' run build",
-    "clean": "pnpm --recursive exec -- rm -rf dist build .expo"
+    "clean": "pnpm --recursive exec -- rm -rf dist build .expo",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.8.1",
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write",
+      "eslint --max-warnings 0"
+    ]
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^8.39.1",
     "@typescript-eslint/parser": "^8.39.1",
@@ -31,6 +39,8 @@
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.5",
     "nx": "^21.4.0",
     "prettier": "^3.6.2"
   }
