@@ -1,0 +1,42 @@
+{
+  "recommendations": [
+    // Essential for development
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "ms-vscode.vscode-typescript-next",
+    
+    // React and React Native
+    "ms-vscode.vscode-react-native",
+    "msjsdiag.vscode-react-native",
+    "rodrigovallades.es7-react-js-snippets",
+    
+    // Expo
+    "expo.vscode-expo-tools",
+    
+    // TypeScript and JavaScript
+    "ms-vscode.vscode-json",
+    "bradlc.vscode-tailwindcss",
+    
+    // General productivity
+    "formulahendry.auto-rename-tag",
+    "christian-kohler.path-intellisense",
+    "ms-vscode.vscode-yaml",
+    "redhat.vscode-xml",
+    
+    // Git
+    "eamodio.gitlens",
+    
+    // Markdown
+    "yzhang.markdown-all-in-one",
+    
+    // Utilities
+    "ms-vscode.vscode-file-watcher",
+    "streetsidesoftware.code-spell-checker",
+    "gruntfuggly.todo-tree"
+  ],
+  "unwantedRecommendations": [
+    "ms-vscode.vscode-typescript",
+    "hookyqr.beautify",
+    "HookyQR.beautify"
+  ]
+}
