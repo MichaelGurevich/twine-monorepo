@@ -2,13 +2,18 @@ import {
   CognitoIdentityProvider,
   ConfirmSignUpCommand,
   ConfirmSignUpCommandInput,
+  ResendConfirmationCodeCommand,
+  ResendConfirmationCodeCommandInput,
   SignUpCommand,
   SignUpCommandInput,
 } from '@aws-sdk/client-cognito-identity-provider';
 import { cognitoConfig } from '../config';
 import {
+  CONFIRM_SIGNUP_ERROR_MSG,
   ConfirmSignUpCommandParams,
   ConfirmSignUpCommandResponse,
+  ResendConfirmationCodeCommandParams,
+  ResendConfirmationCodeCommandResponse,
   SignUpCommandParams,
   SignUpCommandResponse,
 } from '../types';
@@ -50,9 +55,13 @@ class AuthService {
         error: null,
       };
     } catch (error) {
+      const errorMessage =
+        error instanceof Error && CONFIRM_SIGNUP_ERROR_MSG.includes(error.name)
+          ? error.name
+          : 'Unknown error';
       return {
         success: false,
-        error: error instanceof Error ? error.name : 'Unknown error',
+        error: errorMessage,
       };
     }
   }
@@ -81,6 +90,36 @@ class AuthService {
       return {
         success: false,
         error: error instanceof Error ? error.name : 'Unknown error',
+      };
+    }
+  }
+
+  async resendConfirmationCode({
+    email,
+  }: ResendConfirmationCodeCommandParams): Promise<ResendConfirmationCodeCommandResponse> {
+    const resendConfirmationCodeCommandInput: ResendConfirmationCodeCommandInput =
+      {
+        ClientId: this.clientId,
+        Username: email,
+      };
+
+    try {
+      const command = new ResendConfirmationCodeCommand(
+        resendConfirmationCodeCommandInput
+      );
+      await this.client.send(command);
+      return {
+        success: true,
+        error: null,
+      };
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error && CONFIRM_SIGNUP_ERROR_MSG.includes(error.name)
+          ? error.name
+          : 'Unknown error';
+      return {
+        success: false,
+        error: errorMessage,
       };
     }
   }
