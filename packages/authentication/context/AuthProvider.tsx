@@ -4,6 +4,8 @@ import {
   AuthContextType,
   ConfirmSignUpCommandParams,
   ConfirmSignUpCommandResponse,
+  ResendConfirmationCodeCommandParams,
+  ResendConfirmationCodeCommandResponse,
   SignUpCommandParams,
   SignUpCommandResponse,
 } from '../types';
@@ -51,10 +53,32 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     return confirmSignUpResponse;
   };
 
+  const resendConfirmationCode = async ({
+    email,
+  }: ResendConfirmationCodeCommandParams): Promise<ResendConfirmationCodeCommandResponse> => {
+    dispatch({ type: 'LOADING' });
+    const resendConfirmationCodeResponse =
+      await authService.resendConfirmationCode({ email });
+
+    const { success, error } = resendConfirmationCodeResponse;
+
+    if (success) {
+      dispatch({ type: 'RESEND_CONFIRMATION_CODE_SUCCESS' });
+    } else {
+      dispatch({
+        type: 'RESEND_CONFIRMATION_CODE_FAILURE',
+        payload: error ?? null,
+      });
+    }
+
+    return resendConfirmationCodeResponse;
+  };
+
   const value: AuthContextType = {
     ...authState,
     signUp,
     confirmSignUp,
+    resendConfirmationCode,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

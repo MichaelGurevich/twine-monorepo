@@ -29,7 +29,6 @@ export const CONFIRM_SIGNUP_ERROR_MSG = [
 
 export interface ResendConfirmationCodeCommandParams {
   email: string;
-  confirmationCode: string;
 }
 
 export interface ResendConfirmationCodeCommandResponse
@@ -51,4 +50,7 @@ export interface AuthContextType extends AuthState {
   confirmSignUp: (
     params: ConfirmSignUpCommandParams
   ) => Promise<ConfirmSignUpCommandResponse>;
+  resendConfirmationCode: (
+    params: ResendConfirmationCodeCommandParams
+  ) => Promise<ResendConfirmationCodeCommandResponse>;
 }
