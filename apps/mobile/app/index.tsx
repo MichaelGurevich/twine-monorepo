@@ -73,6 +73,10 @@ const SimpleForm = () => {
     authState.confirmSignUp({ email, confirmationCode });
   };
 
+  const handleResendConfirmCode = () => {
+    authState.resendConfirmationCode({ email });
+  };
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -106,6 +110,10 @@ const SimpleForm = () => {
 
       <TouchableOpacity style={styles.button} onPress={handleConfirmCode}>
         <Text style={styles.buttonText}>Confirm Code</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button} onPress={handleResendConfirmCode}>
+        <Text style={styles.buttonText}>Resend confirm Code</Text>
       </TouchableOpacity>
 
       <Text>{authState.error || 'no error'}</Text>
