@@ -61,6 +61,9 @@ const SimpleForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmCode, setConfirmCode] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [challenge, setChallenge] = useState<string | undefined>(undefined);
+  const [token, setToken] = useState<string | null>();
 
   const authState = useAuth();
 
@@ -75,6 +78,23 @@ const SimpleForm = () => {
 
   const handleResendConfirmCode = () => {
     authState.resendConfirmationCode({ email });
+  };
+
+  const handleAuthInitiate = async () => {
+    const response = await authState.initiateAuth({
+      email,
+      password,
+    });
+
+    if (response.success) {
+      if (response.challenge) {
+        setChallenge(`Challenge: ${response.challenge}`);
+      } else if (response.tokens) {
+        setToken(response.tokens.accessToken);
+      }
+    } else {
+      setError(`Error: ${response.error ?? 'Unknown error'}`);
+    }
   };
 
   return (
@@ -116,7 +136,19 @@ const SimpleForm = () => {
         <Text style={styles.buttonText}>Resend confirm Code</Text>
       </TouchableOpacity>
 
-      <Text>{authState.error || 'no error'}</Text>
+      <TouchableOpacity style={styles.button} onPress={handleAuthInitiate}>
+        <Text style={styles.buttonText}>Sign in</Text>
+      </TouchableOpacity>
+
+      <Text>
+        {authState.tokensData
+          ? authState.tokensData.accessToken
+          : 'No tokens available'}
+      </Text>
+
+      <Text>{error ?? 'No error'}</Text>
+      <Text>{challenge ?? 'No challenge'}</Text>
+      <Text>{token ?? 'no token'}</Text>
     </View>
   );
 };
