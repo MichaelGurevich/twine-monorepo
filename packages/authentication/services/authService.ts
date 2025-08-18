@@ -2,6 +2,8 @@ import {
   CognitoIdentityProvider,
   ConfirmSignUpCommand,
   ConfirmSignUpCommandInput,
+  InitiateAuthCommand,
+  InitiateAuthCommandInput,
   ResendConfirmationCodeCommand,
   ResendConfirmationCodeCommandInput,
   SignUpCommand,
@@ -9,13 +11,17 @@ import {
 } from '@aws-sdk/client-cognito-identity-provider';
 import { cognitoConfig } from '../config';
 import {
+  AUTH_FLOW,
   CONFIRM_SIGNUP_ERROR_MSG,
   ConfirmSignUpCommandParams,
   ConfirmSignUpCommandResponse,
+  InitiateAuthCommandParams,
+  InitiateAuthCommandResponse,
   ResendConfirmationCodeCommandParams,
   ResendConfirmationCodeCommandResponse,
   SignUpCommandParams,
   SignUpCommandResponse,
+  TokensData,
 } from '../types';
 
 const { region: REGION, clientId: CLIENT_ID } = cognitoConfig;
@@ -120,6 +126,68 @@ class AuthService {
       return {
         success: false,
         error: errorMessage,
+      };
+    }
+  }
+
+  async initiateAuth({
+    email,
+    password,
+  }: InitiateAuthCommandParams): Promise<InitiateAuthCommandResponse> {
+    const initiateAuthCommandInput: InitiateAuthCommandInput = {
+      AuthFlow: AUTH_FLOW,
+      ClientId: this.clientId,
+      AuthParameters: {
+        PASSWORD: password,
+        USERNAME: email,
+      },
+    };
+
+    try {
+      const command = new InitiateAuthCommand(initiateAuthCommandInput);
+      const { AuthenticationResult, ChallengeName } =
+        await this.client.send(command);
+      if (AuthenticationResult) {
+        const {
+          AccessToken: accessToken,
+          IdToken: idToken,
+          RefreshToken: refreshToken,
+        } = AuthenticationResult;
+
+        if (accessToken && idToken && refreshToken) {
+          const tokens: TokensData = {
+            accessToken,
+            idToken,
+            refreshToken,
+          };
+          return {
+            success: true,
+            error: null,
+            tokens,
+            challenge: undefined,
+          };
+        } else {
+          return {
+            success: false,
+            error: 'MissingTokensInAuthResult',
+            tokens: null,
+            challenge: undefined,
+          };
+        }
+      } else {
+        return {
+          success: true,
+          error: null,
+          tokens: null,
+          challenge: ChallengeName,
+        };
+      }
+    } catch (error) {
+      return {
+        tokens: null,
+        challenge: undefined,
+        success: false,
+        error: error instanceof Error ? error.name : 'UnknownError',
       };
     }
   }

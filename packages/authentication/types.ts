@@ -38,6 +38,29 @@ export const RESEND_CONFIRMATION_CODE_ERROR_MSG = [
   'TooManyFailedAttemptsException',
 ];
 
+export const AUTH_FLOW = 'USER_PASSWORD_AUTH';
+export interface InitiateAuthCommandParams {
+  email: string;
+  password: string;
+}
+
+export interface TokensData {
+  accessToken: string;
+  refreshToken: string;
+  idToken: string;
+}
+
+export interface InitiateAuthCommandResponse extends DefaultResponse {
+  challenge: string | undefined;
+  tokens: TokensData | null;
+}
+
+export interface TokensData {
+  accessToken: string;
+  refreshToken: string;
+  idToken: string;
+}
+
 export interface AuthState {
   isAuthenticated: boolean;
   session: string | null;
