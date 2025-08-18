@@ -28,54 +28,21 @@ export const authReducer = (
         ...state,
         isLoading: true,
       };
-    case 'SIGN_UP_SUCCESS':
-      return {
-        ...state,
-        isLoading: false,
-        isAuthenticated: false,
-      };
-    case 'SIGN_UP_FAILURE':
-      return {
-        ...state,
-        isLoading: false,
-        isAuthenticated: false,
-      };
-    case 'CONFIRM_SIGN_UP_SUCCESS':
-      return {
-        ...state,
-        isLoading: false,
-        isAuthenticated: false,
-      };
-    case 'CONFIRM_SIGN_UP_FAILURE':
-      return {
-        ...state,
-        isLoading: false,
-        isAuthenticated: false,
-      };
-    case 'RESEND_CONFIRMATION_CODE_SUCCESS':
-      return {
-        ...state,
-        isLoading: false,
-        isAuthenticated: false,
-      };
-    case 'RESEND_CONFIRMATION_CODE_FAILURE':
-      return {
-        ...state,
-        isLoading: false,
-        isAuthenticated: false,
-      };
+
     case 'INITIATE_AUTH_SUCCESS_NO_CHALLENGE':
       return {
         ...state,
         isLoading: false,
         isAuthenticated: true,
       };
+
+    case 'SIGN_UP_SUCCESS':
+    case 'SIGN_UP_FAILURE':
+    case 'CONFIRM_SIGN_UP_SUCCESS':
+    case 'CONFIRM_SIGN_UP_FAILURE':
+    case 'RESEND_CONFIRMATION_CODE_SUCCESS':
+    case 'RESEND_CONFIRMATION_CODE_FAILURE':
     case 'INITIATE_AUTH_SUCCESS_CHALLENGE_REQUIRED':
-      return {
-        ...state,
-        isLoading: false,
-        isAuthenticated: false,
-      };
     case 'INITIATE_AUTH_FAILURE':
       return {
         ...state,
