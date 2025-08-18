@@ -1,20 +1,22 @@
-import { AuthState } from '../types';
+import { AuthState, TokensData } from '../types';
 
 export const initialAuthState: AuthState = {
   isAuthenticated: false,
-  session: null,
+  tokensData: undefined,
   isLoading: false,
-  error: null,
 };
 
 export type AuthAction =
   | { type: 'LOADING' }
-  | { type: 'SIGN_UP_SUCCESS'; payload: string | null }
-  | { type: 'SIGN_UP_FAILURE'; payload: string | null }
-  | { type: 'CONFIRM_SIGN_UP_SUCCESS'; payload: string | null }
-  | { type: 'CONFIRM_SIGN_UP_FAILURE'; payload: string | null }
+  | { type: 'SIGN_UP_SUCCESS' }
+  | { type: 'SIGN_UP_FAILURE' }
+  | { type: 'CONFIRM_SIGN_UP_SUCCESS' }
+  | { type: 'CONFIRM_SIGN_UP_FAILURE' }
   | { type: 'RESEND_CONFIRMATION_CODE_SUCCESS' }
-  | { type: 'RESEND_CONFIRMATION_CODE_FAILURE'; payload: string | null };
+  | { type: 'RESEND_CONFIRMATION_CODE_FAILURE' }
+  | { type: 'INITIATE_AUTH_SUCCESS_NO_CHALLENGE'; payload: TokensData }
+  | { type: 'INITIATE_AUTH_SUCCESS_CHALLENGE_REQUIRED' }
+  | { type: 'INITIATE_AUTH_FAILURE' };
 
 export const authReducer = (
   state: AuthState,
@@ -25,53 +27,60 @@ export const authReducer = (
       return {
         ...state,
         isLoading: true,
-        error: null,
       };
     case 'SIGN_UP_SUCCESS':
       return {
         ...state,
         isLoading: false,
         isAuthenticated: false,
-        error: null,
-        session: action.payload,
       };
     case 'SIGN_UP_FAILURE':
       return {
         ...state,
         isLoading: false,
         isAuthenticated: false,
-        session: null,
-        error: action.payload,
       };
     case 'CONFIRM_SIGN_UP_SUCCESS':
       return {
         ...state,
         isLoading: false,
         isAuthenticated: false,
-        session: action.payload,
-        error: null,
       };
     case 'CONFIRM_SIGN_UP_FAILURE':
       return {
         ...state,
         isLoading: false,
         isAuthenticated: false,
-        session: null,
-        error: action.payload,
       };
     case 'RESEND_CONFIRMATION_CODE_SUCCESS':
       return {
         ...state,
         isLoading: false,
         isAuthenticated: false,
-        error: null,
       };
     case 'RESEND_CONFIRMATION_CODE_FAILURE':
       return {
         ...state,
         isLoading: false,
         isAuthenticated: false,
-        error: action.payload,
+      };
+    case 'INITIATE_AUTH_SUCCESS_NO_CHALLENGE':
+      return {
+        ...state,
+        isLoading: false,
+        isAuthenticated: true,
+      };
+    case 'INITIATE_AUTH_SUCCESS_CHALLENGE_REQUIRED':
+      return {
+        ...state,
+        isLoading: false,
+        isAuthenticated: false,
+      };
+    case 'INITIATE_AUTH_FAILURE':
+      return {
+        ...state,
+        isLoading: false,
+        isAuthenticated: false,
       };
 
     default:

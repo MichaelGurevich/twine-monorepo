@@ -4,6 +4,8 @@ import {
   AuthContextType,
   ConfirmSignUpCommandParams,
   ConfirmSignUpCommandResponse,
+  InitiateAuthCommandParams,
+  InitiateAuthCommandResponse,
   ResendConfirmationCodeCommandParams,
   ResendConfirmationCodeCommandResponse,
   SignUpCommandParams,
@@ -26,11 +28,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const signUpCommandResponse: SignUpCommandResponse =
       await authService.signUp({ email, password });
 
-    const { success, session, error } = signUpCommandResponse;
-
-    success
-      ? dispatch({ type: 'SIGN_UP_SUCCESS', payload: session ?? null })
-      : dispatch({ type: 'SIGN_UP_FAILURE', payload: error ?? null });
+    if (signUpCommandResponse.success) {
+      dispatch({ type: 'SIGN_UP_SUCCESS' });
+    } else {
+      dispatch({ type: 'SIGN_UP_FAILURE' });
+    }
 
     return signUpCommandResponse;
   };
@@ -44,11 +46,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       email,
       confirmationCode,
     });
-    const { success, session, error } = confirmSignUpResponse;
 
-    success
-      ? dispatch({ type: 'CONFIRM_SIGN_UP_SUCCESS', payload: session ?? null })
-      : dispatch({ type: 'CONFIRM_SIGN_UP_FAILURE', payload: error ?? null });
+    if (confirmSignUpResponse.success) {
+      dispatch({ type: 'CONFIRM_SIGN_UP_SUCCESS' });
+    } else {
+      dispatch({
+        type: 'CONFIRM_SIGN_UP_FAILURE',
+      });
+    }
 
     return confirmSignUpResponse;
   };
@@ -60,18 +65,48 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const resendConfirmationCodeResponse =
       await authService.resendConfirmationCode({ email });
 
-    const { success, error } = resendConfirmationCodeResponse;
-
-    if (success) {
+    if (resendConfirmationCodeResponse.success) {
       dispatch({ type: 'RESEND_CONFIRMATION_CODE_SUCCESS' });
     } else {
       dispatch({
         type: 'RESEND_CONFIRMATION_CODE_FAILURE',
-        payload: error ?? null,
       });
     }
 
     return resendConfirmationCodeResponse;
+  };
+
+  const initiateAuth = async ({
+    email,
+    password,
+  }: InitiateAuthCommandParams): Promise<InitiateAuthCommandResponse> => {
+    dispatch({ type: 'LOADING' });
+    const initiateAuthCommandResponse = await authService.initiateAuth({
+      email,
+      password,
+    });
+
+    const { success, tokens, challenge } = initiateAuthCommandResponse;
+
+    if (success) {
+      if (tokens) {
+        dispatch({
+          type: 'INITIATE_AUTH_SUCCESS_NO_CHALLENGE',
+          payload: tokens,
+        });
+      }
+      if (challenge) {
+        dispatch({
+          type: 'INITIATE_AUTH_SUCCESS_CHALLENGE_REQUIRED',
+        });
+      }
+    } else {
+      dispatch({
+        type: 'INITIATE_AUTH_FAILURE',
+      });
+    }
+
+    return initiateAuthCommandResponse;
   };
 
   const value: AuthContextType = {
@@ -79,6 +114,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     signUp,
     confirmSignUp,
     resendConfirmationCode,
+    initiateAuth,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

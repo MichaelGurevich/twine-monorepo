@@ -52,7 +52,7 @@ export interface TokensData {
 
 export interface InitiateAuthCommandResponse extends DefaultResponse {
   challenge: string | undefined;
-  tokens: TokensData | null;
+  tokens?: TokensData;
 }
 
 export interface TokensData {
@@ -63,9 +63,8 @@ export interface TokensData {
 
 export interface AuthState {
   isAuthenticated: boolean;
-  session: string | null;
+  tokensData?: TokensData;
   isLoading: boolean;
-  error: string | null;
 }
 
 export interface AuthContextType extends AuthState {
@@ -76,4 +75,8 @@ export interface AuthContextType extends AuthState {
   resendConfirmationCode: (
     params: ResendConfirmationCodeCommandParams
   ) => Promise<ResendConfirmationCodeCommandResponse>;
+
+  initiateAuth: (
+    params: InitiateAuthCommandParams
+  ) => Promise<InitiateAuthCommandResponse>;
 }

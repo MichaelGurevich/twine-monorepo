@@ -170,7 +170,6 @@ class AuthService {
           return {
             success: false,
             error: 'MissingTokensInAuthResult',
-            tokens: null,
             challenge: undefined,
           };
         }
@@ -178,13 +177,11 @@ class AuthService {
         return {
           success: true,
           error: null,
-          tokens: null,
           challenge: ChallengeName,
         };
       }
     } catch (error) {
       return {
-        tokens: null,
         challenge: undefined,
         success: false,
         error: error instanceof Error ? error.name : 'UnknownError',
