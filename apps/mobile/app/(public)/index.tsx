@@ -1,22 +1,5 @@
-// import { Text, View } from 'react-native';
-
-// const Index = () => {
-//   return (
-//     <View
-//       style={{
-//         flex: 1,
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//       }}
-//     >
-//       <Text>Edit app/index.tsx to edit this screen.</Text>
-//     </View>
-//   );
-// };
-
-// export default Index;
-
 import { useAuth } from 'authentication';
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
   StyleSheet,
@@ -65,6 +48,7 @@ const SimpleForm = () => {
   const [challenge, setChallenge] = useState<string | undefined>(undefined);
   const [token, setToken] = useState<string | null>();
 
+  const router = useRouter();
   const authState = useAuth();
 
   const handleSignup = () => {
@@ -138,6 +122,13 @@ const SimpleForm = () => {
 
       <TouchableOpacity style={styles.button} onPress={handleAuthInitiate}>
         <Text style={styles.buttonText}>Sign in</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => router.push('/SignUpEmailPage')}
+      >
+        <Text style={styles.buttonText}>Go to Sign Up</Text>
       </TouchableOpacity>
 
       <Text>

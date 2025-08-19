@@ -1,10 +1,10 @@
 import { AuthProvider } from 'authentication';
-import { Stack } from 'expo-router';
+import { Slot } from 'expo-router';
 
 const RootLayout = () => {
   return (
     <AuthProvider>
-      <Stack />
+      <Slot />
     </AuthProvider>
   );
 };
