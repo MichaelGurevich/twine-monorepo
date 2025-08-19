@@ -1,5 +1,5 @@
 import { ReactNode, useReducer } from 'react';
-import { AuthContext, authService } from '..';
+import { authService } from '../services/authService';
 import {
   AuthContextType,
   ConfirmSignUpCommandParams,
@@ -11,6 +11,7 @@ import {
   SignUpCommandParams,
   SignUpCommandResponse,
 } from '../types';
+import { AuthContext } from './AuthContext';
 import { authReducer, initialAuthState } from './authReducer';
 
 interface AuthProviderProps {
