@@ -11,15 +11,23 @@ const SignUpBackContainer = styled(View)`
   margin-top: 87px;
 `;
 
-export const SignUpBack: React.FC = () => {
+export interface SignUpBackProps {
+  backDestination: 'LoginPage' | 'SignUpEmailPage';
+}
+
+export const SignUpBack = ({ backDestination }: SignUpBackProps) => {
   const router = useRouter();
+
+  const BACK_ROUTE = backDestination === 'LoginPage' ? '/' : '/SignUpEmailPage';
+  const TITLE = backDestination === 'LoginPage' ? 'Log in' : '< Back';
+
   return (
     <SignUpBackContainer>
-      <Text>Have and account? </Text>
+      {backDestination === 'LoginPage' && <Text>Have and account? </Text>}
       <AuthLinkButton
-        title='Log in'
+        title={TITLE}
         onPress={() => {
-          router.push('/');
+          router.push(BACK_ROUTE);
         }}
       />
     </SignUpBackContainer>

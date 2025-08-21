@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import styled from 'styled-components/native';
 import { AuthThemeContextType } from '../../../../contexts/auth';
 import { SignUpFormButton } from './SignUpFormButton';
-import { SignUpInput } from './SignUpInput';
+import { SignUpInput, SignUpInputProps } from './SignUpInput';
 
 const SignUpFormContainer = styled(View)`
   width: 100%;
@@ -11,10 +11,10 @@ const SignUpFormContainer = styled(View)`
     props.theme.pages.signUp.formMarginTop};
 `;
 
-export const SignUpForm: React.FC = () => {
+export const SignUpForm = ({ secureTextEntry }: SignUpInputProps) => {
   return (
     <SignUpFormContainer>
-      <SignUpInput secureTextEntry={false} />
+      <SignUpInput secureTextEntry={secureTextEntry} />
       <SignUpFormButton />
     </SignUpFormContainer>
   );

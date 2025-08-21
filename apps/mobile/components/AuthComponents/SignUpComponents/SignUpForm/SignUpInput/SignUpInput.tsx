@@ -5,7 +5,9 @@ import {
   AuthTextInputProps,
 } from '../../../AuthSharedComponents/AuthInput';
 
-interface SignUpInputProps
+import { useAuthCredentials } from '../../../../../contexts/authCredentials/useAuthCredentials';
+
+export interface SignUpInputProps
   extends Pick<AuthTextInputProps, 'secureTextEntry'> {}
 
 const SignUpCredentialsInputContainer = styled(View)`
@@ -14,15 +16,16 @@ const SignUpCredentialsInputContainer = styled(View)`
   width: 100%;
 `;
 
-export const SignUpInput: React.FC<SignUpInputProps> = ({
-  secureTextEntry,
-}: SignUpInputProps) => {
+export const SignUpInput = ({ secureTextEntry }: SignUpInputProps) => {
+  const { signUpEmail, setSignUpEmailHandler } = useAuthCredentials();
+  const PLACE_HOLDER_TEXT = secureTextEntry ? 'Password' : 'Email';
+
   return (
     <SignUpCredentialsInputContainer>
       <AuthTextInput
-        placeholder='Phone number, username, or email'
-        value={''}
-        onChangeText={() => {}}
+        placeholder={PLACE_HOLDER_TEXT}
+        value={signUpEmail || ''}
+        onChangeText={setSignUpEmailHandler}
         keyboardType='email-address'
         autoComplete='email'
         secureTextEntry={secureTextEntry}

@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import { View } from 'react-native';
 import styled from 'styled-components/native';
 import { AuthThemeContextType } from '../../../../../contexts/auth';
@@ -12,9 +13,16 @@ const SignUpButtonContainer = styled(View)`
 `;
 
 export const SignUpFormButton = () => {
+  const router = useRouter();
   return (
     <SignUpButtonContainer>
-      <AuthPrimaryButton title='Proceed' onPress={() => {}} disabled={false} />
+      <AuthPrimaryButton
+        title='Proceed'
+        onPress={() => {
+          router.push('/SignUpPasswordPage');
+        }}
+        disabled={false}
+      />
     </SignUpButtonContainer>
   );
 };

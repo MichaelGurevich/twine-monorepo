@@ -1,5 +1,7 @@
 import { useAuth } from 'authentication';
 import { Redirect, Stack } from 'expo-router';
+import { AuthThemeProvider } from '../../contexts/auth/AuthThemeContext';
+import { AuthCredentialsProvider } from '../../contexts/authCredentials/AuthCredentialsProvider';
 
 const PublicLayout = () => {
   const { isAuthenticated, isLoading } = useAuth();
@@ -15,7 +17,13 @@ const PublicLayout = () => {
   }
 
   // Render public routes if not authenticated
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <AuthThemeProvider>
+      <AuthCredentialsProvider>
+        <Stack screenOptions={{ headerShown: false }} />
+      </AuthCredentialsProvider>
+    </AuthThemeProvider>
+  );
 };
 
 export default PublicLayout;

@@ -12,7 +12,7 @@ const SignUpEmailPage = () => {
     <AuthContainer>
       <AuthTitle />
       <SignUpForm />
-      <SignUpBack />
+      <SignUpBack backDestination='LoginPage' />
     </AuthContainer>
   );
 };
