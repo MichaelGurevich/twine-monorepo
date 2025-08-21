@@ -1,15 +1,17 @@
 import React from 'react';
-import { AuthContainer } from '../../components/AuthComponents/AuthSharedComponents';
+import {
+  AuthContainer,
+  AuthTitle,
+} from '../../components/AuthComponents/AuthSharedComponents';
 import {
   SignInForm,
   SignInSignUp,
-  SignInTitle,
 } from '../../components/AuthComponents/SignInComponents';
 
 const SignUpPage = () => {
   return (
     <AuthContainer>
-      <SignInTitle />
+      <AuthTitle />
       <SignInForm />
       <SignInSignUp />
     </AuthContainer>

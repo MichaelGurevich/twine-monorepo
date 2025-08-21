@@ -2,21 +2,19 @@ import { View } from 'react-native';
 import styled from 'styled-components/native';
 import { AuthThemeContextType } from '../../../../../contexts/auth';
 import { AuthPrimaryButton } from '../../../AuthSharedComponents/AuthButtons/AuthPrimaryButton';
-import { AuthLinkButton } from '../../../AuthSharedComponents/AuthLink';
 
-const SignInButtonGroupContainer = styled(View)`
+const SignUpButtonContainer = styled(View)`
   justify-content: center;
   align-items: center;
+  width: 100%;
   margin-top: ${(props: { theme: AuthThemeContextType }) =>
     props.theme.spacing.buttonGroupMarginTop};
-  width: 100%;
 `;
 
-export const SignInButtonGroup: React.FC = () => {
+export const SignUpFormButton = () => {
   return (
-    <SignInButtonGroupContainer>
-      <AuthPrimaryButton title='Sign In' onPress={() => {}} disabled={false} />
-      <AuthLinkButton title='Forgot password?' onPress={() => {}} />
-    </SignInButtonGroupContainer>
+    <SignUpButtonContainer>
+      <AuthPrimaryButton title='Proceed' onPress={() => {}} disabled={false} />
+    </SignUpButtonContainer>
   );
 };

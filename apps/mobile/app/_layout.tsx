@@ -1,10 +1,13 @@
 import { AuthProvider } from 'authentication';
 import { Slot } from 'expo-router';
+import { AuthThemeProvider } from '../contexts/auth/AuthThemeContext';
 
 const RootLayout = () => {
   return (
     <AuthProvider>
-      <Slot />
+      <AuthThemeProvider>
+        <Slot />
+      </AuthThemeProvider>
     </AuthProvider>
   );
 };

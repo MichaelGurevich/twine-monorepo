@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
-import {
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import styled from 'styled-components/native';
+import { AuthThemeContextType } from '../../../../contexts/auth';
 
 export interface AuthTextInputProps {
   placeholder: string;
@@ -16,12 +11,15 @@ export interface AuthTextInputProps {
   keyboardType?: 'default' | 'email-address' | 'numeric' | 'phone-pad';
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
   autoComplete?: string;
-  containerStyle?: ViewStyle;
 }
 
 const InputContainer = styled(View)`
   position: relative;
   width: 90%;
+  height: ${(props: { theme: AuthThemeContextType }) =>
+    props.theme.dimensions.inputMinHeight};
+  margin-top: ${(props: { theme: AuthThemeContextType }) =>
+    props.theme.spacing.inputFieldMarginTop};
 `;
 
 const StyledTextInput = styled(TextInput)`
@@ -33,7 +31,6 @@ const StyledTextInput = styled(TextInput)`
     secureTextEntry ? '60px' : '16px'};
   font-size: 16px;
   color: #262626;
-  min-height: 52px;
 `;
 
 const ToggleButton = styled(TouchableOpacity)`
@@ -57,7 +54,6 @@ export const AuthTextInput: React.FC<AuthTextInputProps> = ({
   keyboardType = 'default',
   autoCapitalize = 'none',
   autoComplete,
-  containerStyle,
 }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -68,7 +64,7 @@ export const AuthTextInput: React.FC<AuthTextInputProps> = ({
   const isSecureEntry = secureTextEntry && !isPasswordVisible;
 
   return (
-    <InputContainer style={containerStyle}>
+    <InputContainer>
       <StyledTextInput
         placeholder={placeholder}
         placeholderTextColor='#8E8E8E'

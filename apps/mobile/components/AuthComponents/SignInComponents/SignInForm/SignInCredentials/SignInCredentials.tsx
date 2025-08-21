@@ -19,7 +19,6 @@ export const SignInCredentials: React.FC = () => {
         autoComplete='email'
       />
       <AuthTextInput
-        containerStyle={{ marginTop: 20 }}
         placeholder='Password'
         value={''}
         onChangeText={() => {}}
