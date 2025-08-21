@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native';
 import styled from 'styled-components/native';
 
 export interface AuthTextInputProps {
@@ -10,11 +16,11 @@ export interface AuthTextInputProps {
   keyboardType?: 'default' | 'email-address' | 'numeric' | 'phone-pad';
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
   autoComplete?: string;
+  containerStyle?: ViewStyle;
 }
 
 const InputContainer = styled(View)`
   position: relative;
-  margin: 8px;
   width: 90%;
 `;
 
@@ -51,6 +57,7 @@ export const AuthTextInput: React.FC<AuthTextInputProps> = ({
   keyboardType = 'default',
   autoCapitalize = 'none',
   autoComplete,
+  containerStyle,
 }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -61,7 +68,7 @@ export const AuthTextInput: React.FC<AuthTextInputProps> = ({
   const isSecureEntry = secureTextEntry && !isPasswordVisible;
 
   return (
-    <InputContainer>
+    <InputContainer style={containerStyle}>
       <StyledTextInput
         placeholder={placeholder}
         placeholderTextColor='#8E8E8E'

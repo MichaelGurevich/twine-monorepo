@@ -21,8 +21,6 @@ export interface AuthContainerProps extends ViewProps {
 const MainContainer = styled.View`
   flex: 1;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 `;
 
 export const AuthContainer = ({ children, ...props }: AuthContainerProps) => {
