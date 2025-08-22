@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
+import { AuthThemeContextType } from '../../../../contexts/auth';
 
 export interface AuthLinkButtonProps {
   title: string;
@@ -9,7 +10,8 @@ export interface AuthLinkButtonProps {
 }
 
 const StyledTouchableOpacity = styled(TouchableOpacity)<{ disabled?: boolean }>`
-  padding: 8px;
+  padding: ${(props: { theme: AuthThemeContextType }) =>
+    props.theme.padding.authLinkPadding};
   align-items: center;
   justify-content: center;
 
@@ -19,9 +21,9 @@ const StyledTouchableOpacity = styled(TouchableOpacity)<{ disabled?: boolean }>`
 const LinkText = styled(Text)<{ disabled?: boolean }>`
   color: ${({ disabled }: { disabled?: boolean }) =>
     disabled ? '#A0AEC0' : '#40e0d0'};
-  font-size: 14px;
-  font-weight: 500;
   text-align: center;
+  font-size: ${(props: { theme: AuthThemeContextType }) =>
+    props.theme.textSize.authLinkTextSize};
 `;
 
 export const AuthLinkButton: React.FC<AuthLinkButtonProps> = ({

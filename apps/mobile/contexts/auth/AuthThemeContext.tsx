@@ -12,6 +12,13 @@ export interface AuthThemeContextType {
     buttonSecondaryGroupMarginTop: string;
   };
 
+  padding: {
+    authLinkPadding: string;
+  };
+
+  textSize: {
+    authLinkTextSize: string;
+  };
   // Component dimensions
   dimensions: {
     inputMinHeight: string;
@@ -24,6 +31,7 @@ export interface AuthThemeContextType {
     };
     signUp: {
       formMarginTop: string;
+      buttonSecondaryGroupMarginTop: string;
     };
   };
 }
@@ -62,6 +70,12 @@ export const AuthThemeProvider = ({ children }: AuthThemeProviderProps) => {
       buttonGroupMarginTop: `${SPACING.lg}px`,
       buttonSecondaryGroupMarginTop: `${SPACING.xl}px`,
     },
+    padding: {
+      authLinkPadding: `${SPACING.xs}px`,
+    },
+    textSize: {
+      authLinkTextSize: `${2 * SPACING.xs}px`, // Assuming a fixed size for simplicity
+    },
     dimensions: {
       inputMinHeight: `${DIMENSIONS.inputHeight}px`,
     },
@@ -71,6 +85,7 @@ export const AuthThemeProvider = ({ children }: AuthThemeProviderProps) => {
       },
       signUp: {
         formMarginTop: `${CALCULATED_SPACING.signUpFormOffset}px`,
+        buttonSecondaryGroupMarginTop: `${SPACING.xl + 5 * SPACING.xs - 2}`,
       },
     },
   };

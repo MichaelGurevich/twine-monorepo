@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import { Text, View } from 'react-native';
 import styled from 'styled-components/native';
+import { AuthThemeContextType } from '../../../../contexts/auth';
 import { AuthLinkButton } from '../../AuthSharedComponents/AuthLink';
 
 const SignUpBackContainer = styled(View)`
@@ -8,7 +9,8 @@ const SignUpBackContainer = styled(View)`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: 87px;
+  margin-top: ${(props: { theme: AuthThemeContextType }) =>
+    props.theme.pages.signUp.buttonSecondaryGroupMarginTop};
 `;
 
 export interface SignUpBackProps {
