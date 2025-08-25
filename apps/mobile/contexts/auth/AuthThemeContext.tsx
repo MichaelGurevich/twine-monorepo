@@ -5,11 +5,7 @@ import { ThemeProvider } from 'styled-components/native';
 export interface AuthThemeContextType {
   // Legacy spacing system (kept for backward compatibility)
   spacing: {
-    titleMarginTop: string;
-    formMarginTop: string;
     inputFieldMarginTop: string;
-    buttonGroupMarginTop: string;
-    buttonSecondaryGroupMarginTop: string;
   };
 
   padding: {
@@ -27,27 +23,25 @@ export interface AuthThemeContextType {
 
   // New absolute positioning system for login page
   absolute: {
-    login: {
-      title: {
-        top: string; // Middle of first third (16.66%)
-        alignSelf: string; // Center horizontally
-      };
-      inputFields: {
-        top: string; // Middle of second third (50%)
-        alignSelf: string; // Center horizontally
-      };
-      inputFieldsGroup: {
-        top: string; // Middle of second third (50%)
-        alignSelf: string; // Center horizontally
-      };
-      signInButton: {
-        top: string; // Upper part of third third (70%)
-        alignSelf: string; // Center horizontally
-      };
-      signUpLink: {
-        top: string; // Just below sign in button (77%)
-        alignSelf: string; // Center horizontally
-      };
+    title: {
+      top: string; // Middle of first third (16.66%)
+      alignSelf: string; // Center horizontally
+    };
+    inputFields: {
+      top: string; // Middle of second third (50%)
+      alignSelf: string; // Center horizontally
+    };
+    inputFieldsGroup: {
+      top: string; // Middle of second third (50%)
+      alignSelf: string; // Center horizontally
+    };
+    primaryButton: {
+      top: string; // Upper part of third third (70%)
+      alignSelf: string; // Center horizontally
+    };
+    redirectLink: {
+      top: string; // Just below sign in button (77%)
+      alignSelf: string; // Center horizontally
     };
   };
 
@@ -67,17 +61,6 @@ export interface AuthThemeContextType {
       start: string;
       end: string;
       upperPart: string;
-    };
-  };
-
-  // Page-specific spacing (legacy)
-  pages: {
-    signIn: {
-      formMarginTop: string;
-    };
-    signUp: {
-      formMarginTop: string;
-      buttonSecondaryGroupMarginTop: string;
     };
   };
 }
@@ -117,20 +100,11 @@ export const AuthThemeProvider = ({ children }: AuthThemeProviderProps) => {
     thirdThirdUpperPart: 70,
   } as const;
 
-  // Calculated values for specific use cases (legacy)
-  const CALCULATED_SPACING = {
-    signUpFormOffset: SPACING.xxl + SPACING.base + DIMENSIONS.inputHeight, // 180px
-  } as const;
-
   // Build the theme object
   const authTheme: AuthThemeContextType = {
     // Legacy spacing system
     spacing: {
-      titleMarginTop: `${SPACING.xxl}px`,
-      formMarginTop: `${SPACING.xxl}px`,
       inputFieldMarginTop: `${SPACING.base}px`,
-      buttonGroupMarginTop: `${SPACING.lg}px`,
-      buttonSecondaryGroupMarginTop: `${SPACING.xl}px`,
     },
     padding: {
       authLinkPadding: `${SPACING.xs}px`,
@@ -142,31 +116,26 @@ export const AuthThemeProvider = ({ children }: AuthThemeProviderProps) => {
       inputMinHeight: `${DIMENSIONS.inputHeight}px`,
     },
 
-    // New absolute positioning system
     absolute: {
-      login: {
-        title: {
-          top: `${SCREEN_THIRDS.firstThirdMiddle}%`,
-          alignSelf: 'center',
-        },
-        inputFields: {
-          // top: `${SCREEN_THIRDS.secondThirdMiddle}%`,
-          top: `${SCREEN_THIRDS.secondThirdMiddle}%`,
-          alignSelf: 'center',
-        },
-        inputFieldsGroup: {
-          // top: `${SCREEN_THIRDS.secondThirdMiddle}%`,
-          top: `${45}%`,
-          alignSelf: 'center',
-        },
-        signInButton: {
-          top: `${SCREEN_THIRDS.thirdThirdUpperPart}%`,
-          alignSelf: 'center',
-        },
-        signUpLink: {
-          top: `${SCREEN_THIRDS.thirdThirdUpperPart + 7}%`, // 7% below sign in button
-          alignSelf: 'center',
-        },
+      title: {
+        top: `${SCREEN_THIRDS.firstThirdMiddle}%`,
+        alignSelf: 'center',
+      },
+      inputFields: {
+        top: `${SCREEN_THIRDS.secondThirdMiddle}%`,
+        alignSelf: 'center',
+      },
+      inputFieldsGroup: {
+        top: `${45}%`,
+        alignSelf: 'center',
+      },
+      primaryButton: {
+        top: `${SCREEN_THIRDS.thirdThirdUpperPart}%`,
+        alignSelf: 'center',
+      },
+      redirectLink: {
+        top: `${SCREEN_THIRDS.thirdThirdUpperPart + 20}%`, // 7% below sign in button
+        alignSelf: 'center',
       },
     },
 
@@ -186,17 +155,6 @@ export const AuthThemeProvider = ({ children }: AuthThemeProviderProps) => {
         start: `${SCREEN_THIRDS.thirdThirdStart}%`,
         end: `${SCREEN_THIRDS.thirdThirdEnd}%`,
         upperPart: `${SCREEN_THIRDS.thirdThirdUpperPart}%`,
-      },
-    },
-
-    // Legacy page-specific spacing
-    pages: {
-      signIn: {
-        formMarginTop: `${SPACING.xxl}px`,
-      },
-      signUp: {
-        formMarginTop: `${CALCULATED_SPACING.signUpFormOffset}px`,
-        buttonSecondaryGroupMarginTop: `${SPACING.xl + 5 * SPACING.xs - 2}`,
       },
     },
   };

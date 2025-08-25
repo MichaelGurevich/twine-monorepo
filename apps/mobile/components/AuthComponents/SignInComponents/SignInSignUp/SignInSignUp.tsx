@@ -5,14 +5,15 @@ import { AuthThemeContextType } from '../../../../contexts/auth';
 import { AuthLinkButton } from '../../AuthSharedComponents/AuthLink';
 
 const SignInSignUpContainer = styled(View)`
+  position: absolute;
   width: 100%;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   top: ${({ theme }: { theme: AuthThemeContextType }) =>
-    theme.absolute.login.signUpLink.top};
+    theme.absolute.redirectLink.top};
   align-self: ${({ theme }: { theme: AuthThemeContextType }) =>
-    theme.absolute.login.signUpLink.alignSelf};
+    theme.absolute.redirectLink.alignSelf};
 `;
 
 export const SignInSignUp = () => {

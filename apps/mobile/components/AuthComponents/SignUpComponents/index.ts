@@ -1,2 +1,3 @@
 export * from './SignUpBack';
-export * from './SignUpForm';
+export * from './SignUpFormButton';
+export * from './SignUpInput';

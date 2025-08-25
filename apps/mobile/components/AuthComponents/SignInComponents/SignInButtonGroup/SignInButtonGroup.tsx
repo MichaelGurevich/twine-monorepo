@@ -5,13 +5,14 @@ import { AuthPrimaryButton } from '../../AuthSharedComponents/AuthButtons/AuthPr
 import { AuthLinkButton } from '../../AuthSharedComponents/AuthLink';
 
 const SignInButtonGroupContainer = styled(View)`
+  position: absolute;
   justify-content: center;
   align-items: center;
   width: 100%;
   top: ${({ theme }: { theme: AuthThemeContextType }) =>
-    theme.absolute.login.signInButton.top};
+    theme.absolute.primaryButton.top};
   align-self: ${({ theme }: { theme: AuthThemeContextType }) =>
-    theme.absolute.login.signInButton.alignSelf};
+    theme.absolute.primaryButton.alignSelf};
 `;
 
 export const SignInButtonGroup: React.FC = () => {

@@ -9,9 +9,9 @@ const TitleContainer = styled(View)`
   align-items: center;
   width: 100%;
   top: ${(props: { theme: AuthThemeContextType }) =>
-    props.theme.absolute.login.title.top};
+    props.theme.absolute.title.top};
   align-self: ${(props: { theme: AuthThemeContextType }) =>
-    props.theme.absolute.login.title.alignSelf};
+    props.theme.absolute.title.alignSelf};
 `;
 
 const TitleText = styled(Text)`

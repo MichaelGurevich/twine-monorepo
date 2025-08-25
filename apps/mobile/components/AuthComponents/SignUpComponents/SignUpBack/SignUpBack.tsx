@@ -5,12 +5,15 @@ import { AuthThemeContextType } from '../../../../contexts/auth';
 import { AuthLinkButton } from '../../AuthSharedComponents/AuthLink';
 
 const SignUpBackContainer = styled(View)`
+  position: absolute;
   width: 100%;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: ${(props: { theme: AuthThemeContextType }) =>
-    props.theme.pages.signUp.buttonSecondaryGroupMarginTop};
+  top: ${({ theme }: { theme: AuthThemeContextType }) =>
+    theme.absolute.redirectLink.top};
+  align-self: ${({ theme }: { theme: AuthThemeContextType }) =>
+    theme.absolute.redirectLink.alignSelf};
 `;
 
 export interface SignUpBackProps {

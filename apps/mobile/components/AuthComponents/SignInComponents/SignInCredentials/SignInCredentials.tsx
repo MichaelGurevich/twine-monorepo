@@ -10,9 +10,9 @@ const SignInCredentialsContainer = styled(View)`
   align-items: center;
   width: 100%;
   top: ${({ theme }: { theme: AuthThemeContextType }) =>
-    theme.absolute.login.inputFieldsGroup.top};
+    theme.absolute.inputFieldsGroup.top};
   align-self: ${({ theme }: { theme: AuthThemeContextType }) =>
-    theme.absolute.login.inputFieldsGroup.alignSelf};
+    theme.absolute.inputFieldsGroup.alignSelf};
 `;
 
 export const SignInCredentials: React.FC = () => {
