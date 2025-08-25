@@ -4,11 +4,14 @@ import styled from 'styled-components/native';
 import { AuthThemeContextType } from '../../../../contexts/auth';
 
 const TitleContainer = styled(View)`
+  position: absolute;
   justify-content: center;
   align-items: center;
-  margin-top: ${(props: { theme: AuthThemeContextType }) =>
-    props.theme.spacing.titleMarginTop};
   width: 100%;
+  top: ${(props: { theme: AuthThemeContextType }) =>
+    props.theme.absolute.login.title.top};
+  align-self: ${(props: { theme: AuthThemeContextType }) =>
+    props.theme.absolute.login.title.alignSelf};
 `;
 
 const TitleText = styled(Text)`

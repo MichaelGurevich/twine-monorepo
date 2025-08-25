@@ -3,19 +3,22 @@ import {
   AuthContainer,
   AuthTitle,
 } from '../../components/AuthComponents/AuthSharedComponents';
+
 import {
-  SignInForm,
+  SignInButtonGroup,
+  SignInCredentials,
   SignInSignUp,
 } from '../../components/AuthComponents/SignInComponents';
 
-const SignUpPage = () => {
+const SignInPage = () => {
   return (
     <AuthContainer>
       <AuthTitle />
-      <SignInForm />
+      <SignInCredentials />
+      <SignInButtonGroup />
       <SignInSignUp />
     </AuthContainer>
   );
 };
 
-export default SignUpPage;
+export default SignInPage;

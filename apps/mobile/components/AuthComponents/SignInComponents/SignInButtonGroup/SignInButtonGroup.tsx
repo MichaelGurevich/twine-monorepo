@@ -1,15 +1,17 @@
 import { View } from 'react-native';
 import styled from 'styled-components/native';
-import { AuthThemeContextType } from '../../../../../contexts/auth';
-import { AuthPrimaryButton } from '../../../AuthSharedComponents/AuthButtons/AuthPrimaryButton';
-import { AuthLinkButton } from '../../../AuthSharedComponents/AuthLink';
+import { AuthThemeContextType } from '../../../../contexts/auth';
+import { AuthPrimaryButton } from '../../AuthSharedComponents/AuthButtons/AuthPrimaryButton';
+import { AuthLinkButton } from '../../AuthSharedComponents/AuthLink';
 
 const SignInButtonGroupContainer = styled(View)`
   justify-content: center;
   align-items: center;
-  margin-top: ${(props: { theme: AuthThemeContextType }) =>
-    props.theme.spacing.buttonGroupMarginTop};
   width: 100%;
+  top: ${({ theme }: { theme: AuthThemeContextType }) =>
+    theme.absolute.login.signInButton.top};
+  align-self: ${({ theme }: { theme: AuthThemeContextType }) =>
+    theme.absolute.login.signInButton.alignSelf};
 `;
 
 export const SignInButtonGroup: React.FC = () => {

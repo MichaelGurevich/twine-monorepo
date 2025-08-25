@@ -9,8 +9,10 @@ const SignInSignUpContainer = styled(View)`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: ${(props: { theme: AuthThemeContextType }) =>
-    props.theme.spacing.buttonSecondaryGroupMarginTop};
+  top: ${({ theme }: { theme: AuthThemeContextType }) =>
+    theme.absolute.login.signUpLink.top};
+  align-self: ${({ theme }: { theme: AuthThemeContextType }) =>
+    theme.absolute.login.signUpLink.alignSelf};
 `;
 
 export const SignInSignUp = () => {

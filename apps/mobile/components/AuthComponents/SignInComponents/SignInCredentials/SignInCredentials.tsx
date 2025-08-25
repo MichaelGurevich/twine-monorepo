@@ -1,11 +1,18 @@
 import { View } from 'react-native';
-import styled from 'styled-components';
-import { useAuthCredentials } from '../../../../../contexts/authCredentials/useAuthCredentials';
-import { AuthTextInput } from '../../../AuthSharedComponents/AuthInput';
+import styled from 'styled-components/native';
+import { AuthThemeContextType } from '../../../../contexts/auth';
+import { useAuthCredentials } from '../../../../contexts/authCredentials/useAuthCredentials';
+import { AuthTextInput } from '../../AuthSharedComponents/AuthInput';
+
 const SignInCredentialsContainer = styled(View)`
+  position: absolute;
   justify-content: center;
   align-items: center;
   width: 100%;
+  top: ${({ theme }: { theme: AuthThemeContextType }) =>
+    theme.absolute.login.inputFieldsGroup.top};
+  align-self: ${({ theme }: { theme: AuthThemeContextType }) =>
+    theme.absolute.login.inputFieldsGroup.alignSelf};
 `;
 
 export const SignInCredentials: React.FC = () => {
