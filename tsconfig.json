@@ -23,7 +23,13 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    "apps/mobile/app/components/InputDummy"
+  ],
   "exclude": ["node_modules", "dist", "build", ".expo", "coverage"],
   "references": [
     {

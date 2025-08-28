@@ -1,13 +1,11 @@
 import { useAuth } from 'authentication';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+
+import { ButtonDummy } from '../../components/Button';
+import { InputDummy } from '../../components/InputDummy';
+import { useAuthCredentials } from '../../context/AuthCredentialsContext/useAuthCredentials';
 
 const styles = StyleSheet.create({
   container: {
@@ -41,9 +39,6 @@ const styles = StyleSheet.create({
 });
 
 const SimpleForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmCode, setConfirmCode] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [challenge, setChallenge] = useState<string | undefined>(undefined);
   const [token, setToken] = useState<string | null>();
@@ -51,23 +46,13 @@ const SimpleForm = () => {
   const router = useRouter();
   const authState = useAuth();
 
-  const handleSignup = () => {
-    authState.signUp({ email, password });
-  };
-
-  const handleConfirmCode = () => {
-    const confirmationCode: string = confirmCode;
-    authState.confirmSignUp({ email, confirmationCode });
-  };
-
-  const handleResendConfirmCode = () => {
-    authState.resendConfirmationCode({ email });
-  };
+  const { signInEmail, signInPassword, setSignInEmail, setSignInPassword } =
+    useAuthCredentials();
 
   const handleAuthInitiate = async () => {
     const response = await authState.initiateAuth({
-      email,
-      password,
+      email: signInEmail,
+      password: signInPassword,
     });
 
     if (response.success) {
@@ -83,60 +68,30 @@ const SimpleForm = () => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
+      <InputDummy
         placeholder='Email'
-        value={email}
-        onChangeText={setEmail}
-        keyboardType='email-address'
-        autoCapitalize='none'
+        value={signInEmail}
+        onChangeText={setSignInEmail}
       />
-
-      <TextInput
-        style={styles.input}
+      <InputDummy
         placeholder='Password'
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
+        value={signInPassword}
+        onChangeText={setSignInPassword}
       />
 
-      <TextInput
-        style={styles.input}
-        placeholder='Confirm Code'
-        value={confirmCode}
-        onChangeText={setConfirmCode}
-        keyboardType='numeric'
+      <ButtonDummy onPress={handleAuthInitiate} text='Sign in' />
+      <ButtonDummy
+        onPress={() => {
+          router.push('./SignUpPage');
+        }}
+        text='Go to Sign Up'
       />
-
-      <TouchableOpacity style={styles.button} onPress={handleSignup}>
-        <Text style={styles.buttonText}>Sign Up</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={handleConfirmCode}>
-        <Text style={styles.buttonText}>Confirm Code</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={handleResendConfirmCode}>
-        <Text style={styles.buttonText}>Resend confirm Code</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={handleAuthInitiate}>
-        <Text style={styles.buttonText}>Sign in</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => router.push('/SignUpEmailPage')}
-      >
-        <Text style={styles.buttonText}>Go to Sign Up</Text>
-      </TouchableOpacity>
 
       <Text>
         {authState.tokensData
           ? authState.tokensData.accessToken
           : 'No tokens available'}
       </Text>
-
       <Text>{error ?? 'No error'}</Text>
       <Text>{challenge ?? 'No challenge'}</Text>
       <Text>{token ?? 'no token'}</Text>
