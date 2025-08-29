@@ -2,37 +2,13 @@ import {
   AuthState,
   TokensData,
 } from '../../../../packages/authentication/types';
+import { saveAuthTokens, clearAuthTokens } from '../../utils/secureStorage';
 
 export const initialAuthState: AuthState = {
   isAuthenticated: false,
   tokensData: undefined,
   isLoading: false,
 };
-
-import * as SecureStore from 'expo-secure-store';
-
-const ACCESS_TOKEN = 'accessToken';
-const REFRESH_TOKEN = 'refreshToken';
-
-async function save(key: string, value: string) {
-  try {
-    await SecureStore.setItemAsync(key, value);
-  } catch (error) {
-    throw error;
-  }
-}
-
-async function clearTokens() {
-  try {
-    await Promise.all([
-      SecureStore.deleteItemAsync(ACCESS_TOKEN),
-      SecureStore.deleteItemAsync(REFRESH_TOKEN),
-    ]);
-  } catch (error) {
-    if (typeof error === 'string') return error;
-    return null;
-  }
-}
 
 export type AuthAction =
   | { type: 'SIGN_UP_SUCCESS' }
@@ -56,8 +32,7 @@ export const authReducer = (
   switch (action.type) {
     case 'INITIATE_AUTH_SUCCESS_NO_CHALLENGE':
     case 'REFRESH_TOKEN_SUCCESS':
-      save(ACCESS_TOKEN, action.payload.accessToken);
-      save(REFRESH_TOKEN, action.payload.refreshToken);
+      saveAuthTokens(action.payload.accessToken, action.payload.refreshToken);
       return {
         ...state,
         isAuthenticated: true,
@@ -85,7 +60,7 @@ export const authReducer = (
 
     case 'SIGN_OUT':
       // Clear tokens from secure storage
-      clearTokens();
+      clearAuthTokens();
       return {
         ...state,
         isAuthenticated: false,

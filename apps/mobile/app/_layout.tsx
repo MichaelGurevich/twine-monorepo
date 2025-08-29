@@ -1,32 +1,16 @@
 import { Slot } from 'expo-router';
-import * as SecureStore from 'expo-secure-store';
 import { useEffect } from 'react';
 import 'react-native-get-random-values';
 import { AuthProvider, useAuth } from '../context/Auth';
-
-const REFRESH_TOKEN = 'refreshToken';
-const ACCESS_TOKEN = 'accessToken';
-
-async function load(key: string): Promise<string | null> {
-  try {
-    const value = await SecureStore.getItemAsync(key);
-    if (value) {
-      return value;
-    }
-    return null;
-  } catch (error) {
-    if (typeof error === 'string') return error;
-    return null;
-  }
-}
+import { loadAccessToken, loadRefreshToken } from '../utils/secureStorage';
 
 const AuthInitializer = () => {
   const { validateAccessToken, refreshToken } = useAuth();
 
   useEffect(() => {
     const checkToken = async () => {
-      const securedAccessToken = await load(ACCESS_TOKEN);
-      const securedRefreshToken = await load(REFRESH_TOKEN);
+      const securedAccessToken = await loadAccessToken();
+      const securedRefreshToken = await loadRefreshToken();
 
       if (securedAccessToken) {
         const validateAccessTokenResponse =
