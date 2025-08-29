@@ -6,6 +6,7 @@ import {
   ConfirmSignUpCommandResponse,
   InitiateAuthCommandParams,
   InitiateAuthCommandResponse,
+  RefreshTokenResponse,
   ResendConfirmationCodeCommandParams,
   ResendConfirmationCodeCommandResponse,
   SignUpCommandParams,
@@ -107,13 +108,37 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     return initiateAuthCommandResponse;
   };
 
+  const refreshToken = async (
+    refreshToken: string
+  ): Promise<RefreshTokenResponse> => {
+    const initiateAuthCommandResponse =
+      await authService.refreshToken(refreshToken);
+
+    const { success, tokens } = initiateAuthCommandResponse;
+
+    if (success) {
+      if (tokens) {
+        dispatch({
+          type: 'REFRESH_TOKEN_SUCCESS',
+          payload: tokens,
+        });
+      }
+    } else {
+      dispatch({
+        type: 'INITIATE_AUTH_FAILURE',
+      });
+    }
+
+    return initiateAuthCommandResponse;
+  };
+
   const validateAccessToken = async (
     accessToken: string
   ): Promise<ValidateAccessTokenResponse> => {
     const validateAccessTokenResponse =
       await authService.validateAccessToken(accessToken);
-    const { success, isValid, username } = validateAccessTokenResponse;
-    if (success && isValid && username) {
+    const { success, isValid } = validateAccessTokenResponse;
+    if (success && isValid) {
       dispatch({
         type: 'VALIDATE_ACCESS_TOKEN_SUCCESS',
       });
@@ -132,6 +157,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     resendConfirmationCode,
     initiateAuth,
     validateAccessToken,
+    refreshToken,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

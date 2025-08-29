@@ -1,5 +1,5 @@
-import { useAuth } from '../../context/Auth';
 import { Redirect, Stack } from 'expo-router';
+import { useAuth } from '../../context/Auth';
 import { AuthCredentialsProvider } from '../../context/AuthCredentialsContext/AuthCredentialsProvider';
 
 const PublicLayout = () => {

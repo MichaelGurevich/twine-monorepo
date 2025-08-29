@@ -9,6 +9,19 @@ export const initialAuthState: AuthState = {
   isLoading: false,
 };
 
+import * as SecureStore from 'expo-secure-store';
+
+const ACCESS_TOKEN = 'accessToken';
+const REFRESH_TOKEN = 'refreshToken';
+
+async function save(key: string, value: string) {
+  try {
+    await SecureStore.setItemAsync(key, value);
+  } catch (error) {
+    throw error;
+  }
+}
+
 export type AuthAction =
   | { type: 'SIGN_UP_SUCCESS' }
   | { type: 'SIGN_UP_FAILURE' }
@@ -17,6 +30,7 @@ export type AuthAction =
   | { type: 'RESEND_CONFIRMATION_CODE_SUCCESS' }
   | { type: 'RESEND_CONFIRMATION_CODE_FAILURE' }
   | { type: 'INITIATE_AUTH_SUCCESS_NO_CHALLENGE'; payload: TokensData }
+  | { type: 'REFRESH_TOKEN_SUCCESS'; payload: TokensData }
   | { type: 'INITIATE_AUTH_SUCCESS_CHALLENGE_REQUIRED' }
   | { type: 'INITIATE_AUTH_FAILURE' }
   | { type: 'VALIDATE_ACCESS_TOKEN_FAILURE' }
@@ -28,6 +42,15 @@ export const authReducer = (
 ): AuthState => {
   switch (action.type) {
     case 'INITIATE_AUTH_SUCCESS_NO_CHALLENGE':
+    case 'REFRESH_TOKEN_SUCCESS':
+      save(ACCESS_TOKEN, action.payload.accessToken);
+      save(REFRESH_TOKEN, action.payload.refreshToken);
+      return {
+        ...state,
+        isAuthenticated: true,
+      };
+
+    case 'VALIDATE_ACCESS_TOKEN_SUCCESS':
       return {
         ...state,
         isAuthenticated: true,

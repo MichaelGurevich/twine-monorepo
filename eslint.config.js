@@ -104,7 +104,7 @@ module.exports = defineConfig([
     languageOptions: {
       parser: typescriptParser,
       parserOptions: {
-        project: true,
+        projectService: true,
         tsconfigRootDir: __dirname,
         ecmaFeatures: {
           jsx: true,

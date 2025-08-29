@@ -18,6 +18,7 @@ import {
   ConfirmSignUpCommandResponse,
   InitiateAuthCommandParams,
   InitiateAuthCommandResponse,
+  RefreshTokenResponse,
   ResendConfirmationCodeCommandParams,
   ResendConfirmationCodeCommandResponse,
   SignUpCommandParams,
@@ -205,6 +206,55 @@ class AuthService {
       return {
         success: false,
         isValid: false,
+        error: error instanceof Error ? error.name : 'UnknownError',
+      };
+    }
+  }
+
+  async refreshToken(refreshToken: string): Promise<RefreshTokenResponse> {
+    const initiateAuthCommandInput: InitiateAuthCommandInput = {
+      AuthFlow: 'REFRESH_TOKEN_AUTH',
+      ClientId: this.clientId,
+      AuthParameters: {
+        REFRESH_TOKEN: refreshToken,
+      },
+    };
+
+    try {
+      const command = new InitiateAuthCommand(initiateAuthCommandInput);
+      const { AuthenticationResult } = await this.client.send(command);
+
+      if (AuthenticationResult) {
+        const {
+          AccessToken: accessToken,
+          IdToken: idToken,
+          RefreshToken: newRefreshToken, // Renamed to avoid shadowing
+        } = AuthenticationResult;
+
+        if (accessToken && idToken) {
+          // RefreshToken is optional
+          const tokens: TokensData = {
+            accessToken,
+            idToken,
+            refreshToken: newRefreshToken || refreshToken, // Use new or fallback to original
+          };
+
+          return {
+            success: true,
+            error: null,
+            tokens,
+          };
+        }
+      }
+
+      // Add missing return for incomplete tokens
+      return {
+        success: false,
+        error: 'IncompleteTokenResponse',
+      };
+    } catch (error) {
+      return {
+        success: false,
         error: error instanceof Error ? error.name : 'UnknownError',
       };
     }

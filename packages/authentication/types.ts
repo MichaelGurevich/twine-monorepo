@@ -44,12 +44,6 @@ export interface InitiateAuthCommandParams {
   password: string;
 }
 
-export interface TokensData {
-  accessToken: string;
-  refreshToken: string;
-  idToken: string;
-}
-
 export interface InitiateAuthCommandResponse extends DefaultResponse {
   challenge: string | undefined;
   tokens?: TokensData;
@@ -72,6 +66,10 @@ export interface ValidateAccessTokenResponse extends DefaultResponse {
   username?: string;
 }
 
+export interface RefreshTokenResponse extends DefaultResponse {
+  tokens?: TokensData;
+}
+
 export interface AuthContextType extends AuthState {
   signUp: (params: SignUpCommandParams) => Promise<SignUpCommandResponse>;
   confirmSignUp: (
@@ -88,4 +86,6 @@ export interface AuthContextType extends AuthState {
   validateAccessToken: (
     accessToken: string
   ) => Promise<ValidateAccessTokenResponse>;
+
+  refreshToken: (refreshToken: string) => Promise<RefreshTokenResponse>;
 }
