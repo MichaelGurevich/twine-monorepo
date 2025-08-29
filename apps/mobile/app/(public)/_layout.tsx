@@ -3,12 +3,7 @@ import { Redirect, Stack } from 'expo-router';
 import { AuthCredentialsProvider } from '../../context/AuthCredentialsContext/AuthCredentialsProvider';
 
 const PublicLayout = () => {
-  const { isAuthenticated, isLoading } = useAuth();
-
-  // Show loading state while checking authentication
-  if (isLoading) {
-    return null;
-  }
+  const { isAuthenticated } = useAuth();
 
   // Redirect to protected area if already authenticated
   if (isAuthenticated) {

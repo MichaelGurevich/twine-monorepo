@@ -5,10 +5,13 @@ import { useState } from 'react';
 import { View } from 'react-native';
 import { ButtonDummy } from '../../components/Button';
 import { InputDummy } from '../../components/InputDummy';
+import { useAuthCredentials } from '../../context/AuthCredentialsContext/useAuthCredentials';
 
 const SignUpEmailPage = () => {
-  const { confirmSignUp } = useAuth();
+  const { confirmSignUp, initiateAuth } = useAuth();
+  const { signUpEmail, signUpPassword } = useAuthCredentials();
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [code, setCode] = useState<string>('');
 
@@ -17,7 +20,19 @@ const SignUpEmailPage = () => {
       alert('No');
       return;
     }
-    await confirmSignUp({ code });
+    setIsLoading(true);
+    const confirmSignUpResponse = await confirmSignUp({
+      email: signUpEmail,
+      confirmationCode: code,
+    });
+
+    if (confirmSignUpResponse.success) {
+      await initiateAuth({
+        email: signUpEmail,
+        password: signUpPassword,
+      });
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -37,6 +52,7 @@ const SignUpEmailPage = () => {
       />
       <ButtonDummy text={'Sign Up'} onPress={handleConfirmSignUp} />
       <ButtonDummy text={'Back to Sign Up'} onPress={() => router.back()} />
+      <Text>{isLoading ? 'Loading...' : 'not loading'}</Text>
     </View>
   );
 };

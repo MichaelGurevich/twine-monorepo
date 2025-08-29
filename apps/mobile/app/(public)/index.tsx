@@ -88,13 +88,16 @@ const SimpleForm = () => {
       />
 
       <Text>
+        {authState.isAuthenticated ? 'authenticated' : 'not authenticated'}
+      </Text>
+      <Text>
         {authState.tokensData
           ? authState.tokensData.accessToken
           : 'No tokens available'}
       </Text>
       <Text>{error ?? 'No error'}</Text>
       <Text>{challenge ?? 'No challenge'}</Text>
-      <Text>{token ?? 'no token'}</Text>
+      <Text>{token ?? 'No challenge'}</Text>
     </View>
   );
 };

@@ -25,7 +25,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     email,
     password,
   }: SignUpCommandParams): Promise<SignUpCommandResponse> => {
-    dispatch({ type: 'LOADING' });
     const signUpCommandResponse: SignUpCommandResponse =
       await authService.signUp({ email, password });
 
@@ -42,7 +41,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     email,
     confirmationCode,
   }: ConfirmSignUpCommandParams): Promise<ConfirmSignUpCommandResponse> => {
-    dispatch({ type: 'LOADING' });
     const confirmSignUpResponse = await authService.confirmSignUp({
       email,
       confirmationCode,
@@ -62,7 +60,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const resendConfirmationCode = async ({
     email,
   }: ResendConfirmationCodeCommandParams): Promise<ResendConfirmationCodeCommandResponse> => {
-    dispatch({ type: 'LOADING' });
     const resendConfirmationCodeResponse =
       await authService.resendConfirmationCode({ email });
 
@@ -81,7 +78,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     email,
     password,
   }: InitiateAuthCommandParams): Promise<InitiateAuthCommandResponse> => {
-    dispatch({ type: 'LOADING' });
     const initiateAuthCommandResponse = await authService.initiateAuth({
       email,
       password,

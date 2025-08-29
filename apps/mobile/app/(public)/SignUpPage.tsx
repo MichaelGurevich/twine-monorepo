@@ -5,23 +5,38 @@ import { useState } from 'react';
 import { View } from 'react-native';
 import { ButtonDummy } from '../../components/Button';
 import { InputDummy } from '../../components/InputDummy';
+import { useAuthCredentials } from '../../context/AuthCredentialsContext/useAuthCredentials';
 
-const SignUpEmailPage = () => {
+const SignUpPage = () => {
   const { signUp } = useAuth();
   const router = useRouter();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { signUpEmail, signUpPassword, setSignUpEmail, setSignUpPassword } =
+    useAuthCredentials();
 
   const handleSignUp = async () => {
-    if (password !== confirmPassword || !password || !confirmPassword) {
+    if (
+      signUpPassword !== confirmPassword ||
+      !signUpPassword ||
+      !confirmPassword
+    ) {
       alert('No');
       return;
     }
-    const response = await signUp({ email, password });
+
+    setIsLoading(true);
+
+    const response = await signUp({
+      email: signUpEmail,
+      password: signUpPassword,
+    });
+
+    setIsLoading(false);
     if (response.success) {
-      router.push('/ConfirmEmailPage');
+      router.push('./ConfirmEmailPage');
     }
   };
 
@@ -34,12 +49,16 @@ const SignUpEmailPage = () => {
         backgroundColor: '#fff',
       }}
     >
-      <Text>SignUpEmailPage</Text>
-      <InputDummy placeholder='Email' onChangeText={setEmail} value={email} />
+      <Text>SignUpPage</Text>
+      <InputDummy
+        placeholder='Email'
+        onChangeText={setSignUpEmail}
+        value={signUpEmail}
+      />
       <InputDummy
         placeholder='Password'
-        onChangeText={setPassword}
-        value={password}
+        onChangeText={setSignUpPassword}
+        value={signUpPassword}
       />
 
       <InputDummy
@@ -49,8 +68,9 @@ const SignUpEmailPage = () => {
       />
       <ButtonDummy text={'Sign Up'} onPress={handleSignUp} />
       <ButtonDummy text={'Back to Sign In'} onPress={() => router.back()} />
+      <Text>{isLoading ? 'Loading...' : 'not loading'}</Text>
     </View>
   );
 };
 
-export default SignUpEmailPage;
+export default SignUpPage;

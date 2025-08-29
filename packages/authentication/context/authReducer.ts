@@ -7,7 +7,6 @@ export const initialAuthState: AuthState = {
 };
 
 export type AuthAction =
-  | { type: 'LOADING' }
   | { type: 'SIGN_UP_SUCCESS' }
   | { type: 'SIGN_UP_FAILURE' }
   | { type: 'CONFIRM_SIGN_UP_SUCCESS' }
@@ -23,31 +22,22 @@ export const authReducer = (
   action: AuthAction
 ): AuthState => {
   switch (action.type) {
-    case 'LOADING':
-      return {
-        ...state,
-        isLoading: true,
-      };
-
     case 'INITIATE_AUTH_SUCCESS_NO_CHALLENGE':
       return {
         ...state,
-        isLoading: false,
         isAuthenticated: true,
       };
 
     case 'SIGN_UP_SUCCESS':
     case 'SIGN_UP_FAILURE':
-    case 'CONFIRM_SIGN_UP_SUCCESS':
     case 'CONFIRM_SIGN_UP_FAILURE':
     case 'RESEND_CONFIRMATION_CODE_SUCCESS':
     case 'RESEND_CONFIRMATION_CODE_FAILURE':
+    case 'CONFIRM_SIGN_UP_SUCCESS':
     case 'INITIATE_AUTH_SUCCESS_CHALLENGE_REQUIRED':
     case 'INITIATE_AUTH_FAILURE':
       return {
         ...state,
-        isLoading: false,
-        isAuthenticated: false,
       };
 
     default:

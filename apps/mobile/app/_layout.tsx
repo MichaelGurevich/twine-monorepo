@@ -1,3 +1,4 @@
+import 'react-native-get-random-values';
 import { AuthProvider } from 'authentication';
 import { Slot } from 'expo-router';
 
