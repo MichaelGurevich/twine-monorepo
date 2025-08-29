@@ -1,5 +1,5 @@
 import { Text } from '@react-navigation/elements';
-import { useAuth } from 'authentication';
+import { useAuth } from '../../context/Auth';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { View } from 'react-native';

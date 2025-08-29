@@ -1,4 +1,4 @@
-import { useAuth } from 'authentication';
+import { useAuth } from '../../context/Auth';
 import { Redirect, Slot } from 'expo-router';
 import * as SecureStore from 'expo-secure-store';
 import { useEffect } from 'react';

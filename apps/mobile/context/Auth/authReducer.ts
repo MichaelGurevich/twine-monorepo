@@ -1,4 +1,7 @@
-import { AuthState, TokensData } from '../types';
+import {
+  AuthState,
+  TokensData,
+} from '../../../../packages/authentication/types';
 
 export const initialAuthState: AuthState = {
   isAuthenticated: false,

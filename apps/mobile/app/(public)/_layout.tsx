@@ -1,4 +1,4 @@
-import { useAuth } from 'authentication';
+import { useAuth } from '../../context/Auth';
 import { Redirect, Stack } from 'expo-router';
 import { AuthCredentialsProvider } from '../../context/AuthCredentialsContext/AuthCredentialsProvider';
 
