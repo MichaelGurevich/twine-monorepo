@@ -2,6 +2,7 @@ import {
   CognitoIdentityProvider,
   ConfirmSignUpCommand,
   ConfirmSignUpCommandInput,
+  GetUserCommand,
   InitiateAuthCommand,
   InitiateAuthCommandInput,
   ResendConfirmationCodeCommand,
@@ -22,6 +23,7 @@ import {
   SignUpCommandParams,
   SignUpCommandResponse,
   TokensData,
+  ValidateAccessTokenResponse,
 } from '../types';
 
 const { region: REGION, clientId: CLIENT_ID } = cognitoConfig;
@@ -184,6 +186,25 @@ class AuthService {
       return {
         challenge: undefined,
         success: false,
+        error: error instanceof Error ? error.name : 'UnknownError',
+      };
+    }
+  }
+
+  async validateAccessToken(
+    accessToken: string
+  ): Promise<ValidateAccessTokenResponse> {
+    try {
+      const command = new GetUserCommand({
+        AccessToken: accessToken,
+      });
+      const { Username } = await this.client.send(command);
+
+      return { success: true, error: null, isValid: true, username: Username };
+    } catch (error) {
+      return {
+        success: false,
+        isValid: false,
         error: error instanceof Error ? error.name : 'UnknownError',
       };
     }

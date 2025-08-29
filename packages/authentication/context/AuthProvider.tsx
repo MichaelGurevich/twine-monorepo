@@ -10,6 +10,7 @@ import {
   ResendConfirmationCodeCommandResponse,
   SignUpCommandParams,
   SignUpCommandResponse,
+  ValidateAccessTokenResponse,
 } from '../types';
 import { AuthContext } from './AuthContext';
 import { authReducer, initialAuthState } from './authReducer';
@@ -106,12 +107,31 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     return initiateAuthCommandResponse;
   };
 
+  const validateAccessToken = async (
+    accessToken: string
+  ): Promise<ValidateAccessTokenResponse> => {
+    const validateAccessTokenResponse =
+      await authService.validateAccessToken(accessToken);
+    const { success, isValid, username } = validateAccessTokenResponse;
+    if (success && isValid && username) {
+      dispatch({
+        type: 'VALIDATE_ACCESS_TOKEN_SUCCESS',
+      });
+    } else {
+      dispatch({
+        type: 'VALIDATE_ACCESS_TOKEN_FAILURE',
+      });
+    }
+    return validateAccessTokenResponse;
+  };
+
   const value: AuthContextType = {
     ...authState,
     signUp,
     confirmSignUp,
     resendConfirmationCode,
     initiateAuth,
+    validateAccessToken,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

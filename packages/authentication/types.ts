@@ -67,6 +67,11 @@ export interface AuthState {
   isLoading: boolean;
 }
 
+export interface ValidateAccessTokenResponse extends DefaultResponse {
+  isValid: boolean;
+  username?: string;
+}
+
 export interface AuthContextType extends AuthState {
   signUp: (params: SignUpCommandParams) => Promise<SignUpCommandResponse>;
   confirmSignUp: (
@@ -79,4 +84,8 @@ export interface AuthContextType extends AuthState {
   initiateAuth: (
     params: InitiateAuthCommandParams
   ) => Promise<InitiateAuthCommandResponse>;
+
+  validateAccessToken: (
+    accessToken: string
+  ) => Promise<ValidateAccessTokenResponse>;
 }

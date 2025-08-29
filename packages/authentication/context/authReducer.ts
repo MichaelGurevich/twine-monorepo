@@ -15,7 +15,9 @@ export type AuthAction =
   | { type: 'RESEND_CONFIRMATION_CODE_FAILURE' }
   | { type: 'INITIATE_AUTH_SUCCESS_NO_CHALLENGE'; payload: TokensData }
   | { type: 'INITIATE_AUTH_SUCCESS_CHALLENGE_REQUIRED' }
-  | { type: 'INITIATE_AUTH_FAILURE' };
+  | { type: 'INITIATE_AUTH_FAILURE' }
+  | { type: 'VALIDATE_ACCESS_TOKEN_FAILURE' }
+  | { type: 'VALIDATE_ACCESS_TOKEN_SUCCESS' };
 
 export const authReducer = (
   state: AuthState,
@@ -36,8 +38,10 @@ export const authReducer = (
     case 'CONFIRM_SIGN_UP_SUCCESS':
     case 'INITIATE_AUTH_SUCCESS_CHALLENGE_REQUIRED':
     case 'INITIATE_AUTH_FAILURE':
+    case 'VALIDATE_ACCESS_TOKEN_FAILURE':
       return {
         ...state,
+        isAuthenticated: false,
       };
 
     default:
