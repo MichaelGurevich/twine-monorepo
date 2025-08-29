@@ -22,6 +22,18 @@ async function save(key: string, value: string) {
   }
 }
 
+async function clearTokens() {
+  try {
+    await Promise.all([
+      SecureStore.deleteItemAsync(ACCESS_TOKEN),
+      SecureStore.deleteItemAsync(REFRESH_TOKEN),
+    ]);
+  } catch (error) {
+    if (typeof error === 'string') return error;
+    return null;
+  }
+}
+
 export type AuthAction =
   | { type: 'SIGN_UP_SUCCESS' }
   | { type: 'SIGN_UP_FAILURE' }
@@ -34,7 +46,8 @@ export type AuthAction =
   | { type: 'INITIATE_AUTH_SUCCESS_CHALLENGE_REQUIRED' }
   | { type: 'INITIATE_AUTH_FAILURE' }
   | { type: 'VALIDATE_ACCESS_TOKEN_FAILURE' }
-  | { type: 'VALIDATE_ACCESS_TOKEN_SUCCESS' };
+  | { type: 'VALIDATE_ACCESS_TOKEN_SUCCESS' }
+  | { type: 'SIGN_OUT' };
 
 export const authReducer = (
   state: AuthState,
@@ -68,6 +81,15 @@ export const authReducer = (
       return {
         ...state,
         isAuthenticated: false,
+      };
+
+    case 'SIGN_OUT':
+      // Clear tokens from secure storage
+      clearTokens();
+      return {
+        ...state,
+        isAuthenticated: false,
+        tokensData: undefined,
       };
 
     default:

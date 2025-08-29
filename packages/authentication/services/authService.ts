@@ -3,6 +3,7 @@ import {
   ConfirmSignUpCommand,
   ConfirmSignUpCommandInput,
   GetUserCommand,
+  GlobalSignOutCommand,
   InitiateAuthCommand,
   InitiateAuthCommandInput,
   ResendConfirmationCodeCommand,
@@ -21,6 +22,8 @@ import {
   RefreshTokenResponse,
   ResendConfirmationCodeCommandParams,
   ResendConfirmationCodeCommandResponse,
+  SignOutCommandParams,
+  SignOutCommandResponse,
   SignUpCommandParams,
   SignUpCommandResponse,
   TokensData,
@@ -251,6 +254,27 @@ class AuthService {
       return {
         success: false,
         error: 'IncompleteTokenResponse',
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.name : 'UnknownError',
+      };
+    }
+  }
+
+  async signOut({
+    accessToken,
+  }: SignOutCommandParams): Promise<SignOutCommandResponse> {
+    try {
+      const command = new GlobalSignOutCommand({
+        AccessToken: accessToken,
+      });
+      await this.client.send(command);
+
+      return {
+        success: true,
+        error: null,
       };
     } catch (error) {
       return {

@@ -70,6 +70,12 @@ export interface RefreshTokenResponse extends DefaultResponse {
   tokens?: TokensData;
 }
 
+export interface SignOutCommandParams {
+  accessToken: string;
+}
+
+export interface SignOutCommandResponse extends DefaultResponse {}
+
 export interface AuthContextType extends AuthState {
   signUp: (params: SignUpCommandParams) => Promise<SignUpCommandResponse>;
   confirmSignUp: (
@@ -88,4 +94,6 @@ export interface AuthContextType extends AuthState {
   ) => Promise<ValidateAccessTokenResponse>;
 
   refreshToken: (refreshToken: string) => Promise<RefreshTokenResponse>;
+
+  signOut: (params: SignOutCommandParams) => Promise<SignOutCommandResponse>;
 }

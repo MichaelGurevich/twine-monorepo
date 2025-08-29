@@ -9,6 +9,8 @@ import {
   RefreshTokenResponse,
   ResendConfirmationCodeCommandParams,
   ResendConfirmationCodeCommandResponse,
+  SignOutCommandParams,
+  SignOutCommandResponse,
   SignUpCommandParams,
   SignUpCommandResponse,
   ValidateAccessTokenResponse,
@@ -150,6 +152,24 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     return validateAccessTokenResponse;
   };
 
+  const signOut = async ({
+    accessToken,
+  }: SignOutCommandParams): Promise<SignOutCommandResponse> => {
+    const signOutResponse = await authService.signOut({ accessToken });
+
+    if (signOutResponse.success) {
+      dispatch({
+        type: 'SIGN_OUT',
+      });
+    } else {
+      dispatch({
+        type: 'VALIDATE_ACCESS_TOKEN_FAILURE',
+      });
+    }
+
+    return signOutResponse;
+  };
+
   const value: AuthContextType = {
     ...authState,
     signUp,
@@ -158,6 +178,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     initiateAuth,
     validateAccessToken,
     refreshToken,
+    signOut,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
